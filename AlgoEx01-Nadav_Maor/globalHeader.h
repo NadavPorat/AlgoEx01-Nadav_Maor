@@ -10,23 +10,19 @@
 #include <stdlib.h> 
 #include<cmath>
 
-
-
 using namespace std;
 
-struct AdjacencyMatrixGraphNode
-{
-	bool isThereAnEdge;
-	float edgeWeight;
-
-};
-
-
+#include "engine.h"
+#include "DisjointSets.h"
+#include "DisjointSetsNode.h"
 #include "MinimumHeapNode.h"
 #include "MinimumHeap.h"
 #include "AdjacencyListNode.h"
 #include "AdjacencyList.h"
 #include "AdjacencyListGraph.h"
+
+int* Prim(AdjacencyListGraph* adjacencyListGraph);
+int* Kruskal(AdjacencyListGraph* adjacencyListGraph);
 
 #define INF INT_MAX
 

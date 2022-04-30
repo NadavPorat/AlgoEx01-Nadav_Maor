@@ -22,6 +22,10 @@
     <ClCompile Include="AdjacencyList.cpp" />
     <ClCompile Include="AdjacencyListGraph.cpp" />
     <ClCompile Include="AdjacencyListNode.cpp" />
+    <ClCompile Include="algoFindMinTree.cpp" />
+    <ClCompile Include="DisjointSets.cpp" />
+    <ClCompile Include="DisjointSetsNode.cpp" />
+    <ClCompile Include="engine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MinimumHeap.cpp" />
     <ClCompile Include="MinimumHeapNode.cpp" />
@@ -30,6 +34,9 @@
     <ClInclude Include="AdjacencyList.h" />
     <ClInclude Include="AdjacencyListGraph.h" />
     <ClInclude Include="AdjacencyListNode.h" />
+    <ClInclude Include="DisjointSets.h" />
+    <ClInclude Include="DisjointSetsNode.h" />
+    <ClInclude Include="engine.h" />
     <ClInclude Include="globalHeader.h" />
     <ClInclude Include="MinimumHeap.h" />
     <ClInclude Include="MinimumHeapNode.h" />
