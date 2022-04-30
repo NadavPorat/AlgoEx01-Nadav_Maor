@@ -1,0 +1,3 @@
+Kruskal 1
+Prim 46
+Kruskal 1

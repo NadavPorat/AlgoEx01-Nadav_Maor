@@ -6,7 +6,7 @@ class MinimumHeapNode
 
 private:
 	int value;
-	float key;
+	float vertexName;
 
 public:
 

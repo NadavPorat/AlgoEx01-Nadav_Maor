@@ -20,7 +20,7 @@ public:
     void RemoveEdge(int src, int dest);
     int getNumOfVertix();
     AdjacencyList GetAdjList(int requiredVertixAdjList);
-    float getEdgeWeight(int source, int dest);
+    int getEdgeWeight(int source, int dest);
 
 
     static AdjacencyListNode* newAdjListNode(int newNodedest, float newEdgeWeight);

@@ -4,7 +4,7 @@
 
 int MinimumHeapNode::getVertixName()
 {
-	return key;
+	return vertexName;
 }
 
 float MinimumHeapNode::getValue()
@@ -20,7 +20,7 @@ void MinimumHeapNode::setValue(int newValue)
 
 void MinimumHeapNode::setKey(int newKey)
 {
-	key = newKey;
+	vertexName = newKey;
 }
 
 

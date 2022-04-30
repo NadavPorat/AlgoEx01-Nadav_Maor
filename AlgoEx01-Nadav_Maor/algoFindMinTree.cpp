@@ -3,16 +3,28 @@
 
 
 
-static int calcGraphWight(int* parentList, AdjacencyListGraph* graph);
+
+static int calcGraphWight(int* parentList, AdjacencyListGraph* graph)
+{
+	int sum = 0;
+	for (int i = 1; i <= graph->getNumOfVertix(); i++)
+	{
+		if (parentList[i] != INF && parentList[i] != 0)
+		{
+			sum += graph->getEdgeWeight(parentList[i], i);
+		}
+	}
+	return sum;
+}
 static void quickSort(int arr[], int start, int end);
 
-int* Prim(AdjacencyListGraph* adjacencyListGraph) {
+int Prim(AdjacencyListGraph* adjacencyListGraph) {
 
 
 	int numOfVertix = adjacencyListGraph->getNumOfVertix();
 	minimumHeap* Q = new minimumHeap(numOfVertix);
 	bool* inT = new bool[numOfVertix];
-	for (int i = 0; i < numOfVertix; i++) {
+	for (int i = 0; i <= numOfVertix; i++) {
 		inT[i] = false;
 	}
 
@@ -20,10 +32,11 @@ int* Prim(AdjacencyListGraph* adjacencyListGraph) {
 	int* parent = new int[numOfVertix];
 
 	int startVertix = 1; //Change to random vertix 1<i<n
+	minArr[0] = INF;
 	minArr[startVertix] = 0;
 	parent[startVertix] = NULL;
 
-	for (int j = 2; j < numOfVertix; j++)
+	for (int j = 2; j <= numOfVertix; j++)
 	{
 		minArr[j] = INF;
 		parent[j] = NULL;
@@ -42,22 +55,21 @@ int* Prim(AdjacencyListGraph* adjacencyListGraph) {
 		{
 			if (!inT[adj->GetDest()] && adj->GetWeight() < minArr[adj->GetDest()])
 			{
-				minArr[adj->GetDest()] = adj->GetWeight();
-				parent[adj->GetDest()] = u->getVertixName();
-				Q->decreaseKey(adj->GetDest(), minArr[adj->GetDest()]);
+				int vertexDest = adj->GetDest();
+				minArr[vertexDest] = adj->GetWeight();
+				parent[vertexDest] = u->getVertixName();
+				Q->decreaseKey(adj->GetDest(), minArr[vertexDest]);
 			}
-			adj->setNext(adj->GetNext());
+			adj = adj->GetNext();
 		}
 	}
-
-	return parent;
+	int sum = calcGraphWight(parent, adjacencyListGraph);
+	return sum;
 }
-
-int* Kruskal(AdjacencyListGraph* adjacencyListGraph)
+int Kruskal(AdjacencyListGraph* adjacencyListGraph)
 {
 	int* parent = new int[3];
-
-	return parent;
+	return 1;
 	//int pv = 0, pu = 0;
 	//vector <edge> minSpan;
 	//vector <edge> edges;

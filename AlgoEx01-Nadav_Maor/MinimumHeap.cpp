@@ -2,27 +2,24 @@
 
 //Constructors
 //Check if need to implement build 
-minimumHeap::minimumHeap(int _numOfVertix)
+minimumHeap::minimumHeap(int _numOfVertex)
 {
-	array = new MinimumHeapNode * [_numOfVertix + 1];
+	array = new MinimumHeapNode * [_numOfVertex + 1];
 }
 
-void minimumHeap::Build(int _numOfVertix, int* weigthArr)
+void minimumHeap::Build(int _numOfVertex, int* weigthArr)
 {
-	positionArr = (int*)malloc((_numOfVertix + 1) * sizeof(int));
-	pysSize = _numOfVertix;
-	logSize = _numOfVertix;
+	positionArr = (int*)malloc((_numOfVertex + 1) * sizeof(int));
+	pysSize = _numOfVertex;
+	logSize = _numOfVertex;
 
-	for (int i = 0; i < _numOfVertix; i++)
+	for (int i = 0; i < _numOfVertex; i++)
 	{
 		array[i] = new MinimumHeapNode;
 		array[i]->setKey(i + 1);
-		if (i == 0)
-			array[i]->setValue(weigthArr[i + 1]);
-		else
-			array[i]->setValue(weigthArr[2]);
+		array[i]->setValue(weigthArr[2]);
 
-		positionArr[i] = i;
+		positionArr[i+1] = i;
 	}
 
 	for (int i = logSize / 2 - 1; i >= 0; i--)
@@ -119,16 +116,19 @@ MinimumHeapNode* minimumHeap::deleteMin()
 
 void  minimumHeap::decreaseKey(int keyToDecrease, float newValue)
 {
-	int idx = positionArr[keyToDecrease];
-	array[idx]->setValue(newValue);
-
-	while (parent(idx) >= 0)
+	if (0 != keyToDecrease) //no vetrex 0
 	{
-		fixHeap(parent(idx));
-		idx = parent(idx);
+		int idx = positionArr[keyToDecrease];
+		array[idx]->setValue(newValue);
 
-		if (idx == 0)
-			idx = -1;
+		while (parent(idx) >= 0)
+		{
+			fixHeap(parent(idx));
+			idx = parent(idx);
+
+			if (idx == 0)
+				idx = -1;
+		}
 	}
 }
 

@@ -9,19 +9,6 @@
 
 using namespace std;
 
-
-static int calcGraphWight(int* parentList, AdjacencyListGraph* graph)
-{
-	int sum = 0;
-	for (int i = 1; i < graph->getNumOfVertix(); i++)
-	{
-		if (parentList[i] != INF)
-		{
-			sum += graph->getEdgeWeight(parentList[i], i);
-		}
-	}
-	return sum;
-}
 static AdjacencyListGraph* buildGraphFromFile(string inFileName, int* edgeToRemove)
 {
 
@@ -95,9 +82,8 @@ static AdjacencyListGraph* buildGraphFromFile(string inFileName, int* edgeToRemo
 	inputFile >> edgeToremoveSrc;
 	inputFile >> edgeToRemoveDest;
 	int edgeToRemoveFromFile[2];
-	edgeToRemoveFromFile[0] = edgeToremoveSrc;
-	edgeToRemoveFromFile[1] = edgeToRemoveDest;
-	edgeToRemove = edgeToRemoveFromFile;
+	edgeToRemove[0] = edgeToremoveSrc;
+	edgeToRemove[1] = edgeToRemoveDest;
 	inputFile.close();
 	return adjacencyListGraph;
 
@@ -108,27 +94,39 @@ static void run(string inFileName, string outFileName)
 	AdjacencyListGraph* adjacencyListGraph = buildGraphFromFile(inFileName, edgeToRemove);
 
 	////start of Prim ////
-	int* primTree = Prim(adjacencyListGraph);
-	int primWeigth = calcGraphWight(primTree, adjacencyListGraph);
+	int primWeigth = Prim(adjacencyListGraph);
 	////end of Prim ////
 
 
 	////start of kruskal ////
 
-	int* KruskalTree = Kruskal(adjacencyListGraph);
-	int kruskalWeigth = calcGraphWight(KruskalTree, adjacencyListGraph);
+	int kruskalWeigth = Kruskal(adjacencyListGraph);
 	adjacencyListGraph->RemoveEdge(edgeToRemove[0], edgeToRemove[1]);
-	int* KruskalTreeAfterRemoveAdge = Kruskal(adjacencyListGraph);
-	int NEWkruskalWeigthAfterRemoveEdge = calcGraphWight(KruskalTreeAfterRemoveAdge, adjacencyListGraph);
+	int KruskalTreeAfterRemoveAdge = Kruskal(adjacencyListGraph);
+
 
 
 	ofstream outFile;
 	outFile.open(outFileName);
-	string Kruskal = "Kruskal " + kruskalWeigth;
-	string prim = "Prim " + primWeigth;
-	string KruskalAfterRemove = "Kruskal " + NEWkruskalWeigthAfterRemoveEdge;
+	string Kruskal = "Kruskal ";
+	Kruskal += to_string(kruskalWeigth);
+	cout << Kruskal;
+	cout << "\n";
 	outFile << Kruskal;
+	outFile << "\n";
+
+	string prim = "Prim ";
+	prim += to_string(primWeigth);
+	cout << prim;
+	cout << "\n";
 	outFile << prim;
+	outFile << "\n";
+
+	string KruskalAfterRemove = "Kruskal ";
+	KruskalAfterRemove += to_string(KruskalTreeAfterRemoveAdge);
+
+
+	cout << KruskalAfterRemove;
 	outFile << KruskalAfterRemove;
 	outFile.close();
 }

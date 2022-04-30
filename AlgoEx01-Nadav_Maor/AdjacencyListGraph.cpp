@@ -92,7 +92,7 @@ void AdjacencyListGraph::RemoveEdge(int source, int dest)
 
         while (nodeToCheck != nullptr)
         {
-            if ((nodeToCheck->GetNext())->GetDest() == dest)
+            if (nodeToCheck->GetDest() == dest)
             {
                 break;
             }
@@ -100,15 +100,29 @@ void AdjacencyListGraph::RemoveEdge(int source, int dest)
                 nodeToCheck = (nodeToCheck->GetNext());
         }
 
-        nodeToCheck->setNext(nodeToCheck->GetNext()->GetNext());
+        if (nodeToCheck == array[source].getHead())
+        {
+            array[source].setHead(nodeToCheck->GetNext());
+        }
+        else
+        {
+            nodeToCheck->setNext(nodeToCheck->GetNext());
+        }
 
     }
 }
 
 
-float AdjacencyListGraph::getEdgeWeight(int source, int dest)
+int AdjacencyListGraph::getEdgeWeight(int source, int dest)
 {
-    return 0;
+
+    AdjacencyListNode* adj = array[source].getHead();
+
+    while (adj->GetDest() != dest)
+    {
+        adj = adj->GetNext();
+    }
+    return adj->GetWeight();
 }
 
 

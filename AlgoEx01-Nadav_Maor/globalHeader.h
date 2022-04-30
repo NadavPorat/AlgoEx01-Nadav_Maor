@@ -21,8 +21,8 @@ using namespace std;
 #include "AdjacencyList.h"
 #include "AdjacencyListGraph.h"
 
-int* Prim(AdjacencyListGraph* adjacencyListGraph);
-int* Kruskal(AdjacencyListGraph* adjacencyListGraph);
+int Prim(AdjacencyListGraph* adjacencyListGraph);
+int Kruskal(AdjacencyListGraph* adjacencyListGraph);
 
 #define INF INT_MAX
 
