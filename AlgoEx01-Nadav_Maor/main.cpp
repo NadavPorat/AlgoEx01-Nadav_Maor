@@ -14,7 +14,9 @@ static AdjacencyListGraph* buildGraphFromFile(string inFileName, int* edgeToRemo
 
 
 	ifstream inputFile;
-	inputFile.open(inFileName);
+    //TODO RETURN IF NOT IN MAC
+	//inputFile.open(inFileName);
+	inputFile.open("/Users/nporat/CLionProjects/AlgoEx01-Nadav_Maor/AlgoEx01-Nadav_Maor/inputGraph.txt");
 	string inputLine;
 
 	if (!inputFile)
@@ -94,36 +96,37 @@ static void run(string inFileName, string outFileName)
 	AdjacencyListGraph* adjacencyListGraph = buildGraphFromFile(inFileName, edgeToRemove);
 
 	////start of Prim ////
-	int primWeigth = Prim(adjacencyListGraph);
+	int primWeight = Prim(adjacencyListGraph);
 	////end of Prim ////
 
 
 	////start of kruskal ////
 
-	int kruskalWeigth = Kruskal(adjacencyListGraph);
+	int kruskalWeight = Kruskal(adjacencyListGraph);
 	adjacencyListGraph->RemoveEdge(edgeToRemove[0], edgeToRemove[1]);
-	int KruskalTreeAfterRemoveAdge = Kruskal(adjacencyListGraph);
+	int KruskalTreeAfterRemoveEdge = Kruskal(adjacencyListGraph);
 
 
 
 	ofstream outFile;
 	outFile.open(outFileName);
 	string Kruskal = "Kruskal ";
-	Kruskal += to_string(kruskalWeigth);
+	Kruskal += to_string(kruskalWeight);
 	cout << Kruskal;
 	cout << "\n";
 	outFile << Kruskal;
 	outFile << "\n";
 
 	string prim = "Prim ";
-	prim += to_string(primWeigth);
+	prim += to_string(primWeight
+            );
 	cout << prim;
 	cout << "\n";
 	outFile << prim;
 	outFile << "\n";
 
 	string KruskalAfterRemove = "Kruskal ";
-	KruskalAfterRemove += to_string(KruskalTreeAfterRemoveAdge);
+	KruskalAfterRemove += to_string(KruskalTreeAfterRemoveEdge);
 
 
 	cout << KruskalAfterRemove;

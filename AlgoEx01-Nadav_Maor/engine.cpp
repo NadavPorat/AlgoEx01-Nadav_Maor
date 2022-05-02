@@ -4,7 +4,7 @@
 //int engine::calcGraphWight(int* parentList, AdjacencyListGraph* graph)
 //{
 //	int sum = 0;
-//	for (int i = 1; i < graph->getNumOfVertix(); i++)
+//	for (int i = 1; i < graph->getNumOfVertex(); i++)
 //	{
 //		if (parentList[i] != INF)
 //		{

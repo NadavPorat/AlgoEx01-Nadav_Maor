@@ -8,18 +8,20 @@ class AdjacencyList;
 class AdjacencyListGraph
 {
 
-    int numOfVertics;
+    int numOfVertecs;
+    int numOfEdge;
     AdjacencyList* array;
 
 public:
     AdjacencyListGraph(int _numberOfVerticsForMatrixInit);
     AdjacencyListGraph();
-    void MakeEmptyGraph(int _numberOfVerticsForMatrixInit);
+    void MakeEmptyGraph(int _numberOfVertecsForMatrixInit);
     void AddEdge(int src, int dest, float newEdgeWeight);
     bool IsAdjacent(int source, int dest);
     void RemoveEdge(int src, int dest);
-    int getNumOfVertix();
-    AdjacencyList GetAdjList(int requiredVertixAdjList);
+    int getNumOfVertex();
+    int getNumOfEdges();
+    AdjacencyList GetAdjList(int requiredVertexAdjList);
     int getEdgeWeight(int source, int dest);
 
 

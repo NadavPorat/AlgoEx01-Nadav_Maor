@@ -1,4 +1,5 @@
 #include "globalHeader.h"
+#include "AdjacencyListGraph.h"
 
 
 #define INF INT_MAX;
@@ -17,12 +18,13 @@ AdjacencyListGraph::AdjacencyListGraph()
 
 }
 
-void AdjacencyListGraph::MakeEmptyGraph(int _numberOfVerticsForMatrixInit)
+void AdjacencyListGraph::MakeEmptyGraph(int _numberOfVertecsForMatrixInit)
 {
-    this->numOfVertics = _numberOfVerticsForMatrixInit;
-    array = new AdjacencyList[_numberOfVerticsForMatrixInit + 1];
+    this->numOfVertecs = _numberOfVertecsForMatrixInit;
+    this->numOfEdge = 0;
+    array = new AdjacencyList[_numberOfVertecsForMatrixInit + 1];
 
-    for (int forIdx = 0; forIdx <= _numberOfVerticsForMatrixInit; forIdx++)
+    for (int forIdx = 0; forIdx <= _numberOfVertecsForMatrixInit; forIdx++)
     {
         array[forIdx].setHead(nullptr);
     }
@@ -45,14 +47,14 @@ bool AdjacencyListGraph::IsAdjacent(int source, int dest)
     return false;
 }
 
-AdjacencyList AdjacencyListGraph::GetAdjList(int requiredVertixAdjList)
+AdjacencyList AdjacencyListGraph::GetAdjList(int requiredVertexAdjList)
 {
-    return array[requiredVertixAdjList];
+    return array[requiredVertexAdjList];
 }
 
-int AdjacencyListGraph::getNumOfVertix()
+int AdjacencyListGraph::getNumOfVertex()
 {
-    return numOfVertics;
+    return numOfVertecs;
 }
 
 
@@ -80,12 +82,13 @@ void AdjacencyListGraph::AddEdge(int src, int dest, float newEdgeWeight)
     AdjacencyListNode* cloneEdge = newAdjListNode(src, newEdgeWeight);
     cloneEdge->setNext(array[dest].getHead());
     array[dest].setHead(cloneEdge);
+    this->numOfEdge += 1;
 }
 
 
 void AdjacencyListGraph::RemoveEdge(int source, int dest)
 {
-
+    ///TODO ADD REMOVE FROM BOTH SIDE
     if (IsAdjacent(source, dest))
     {
         AdjacencyListNode* nodeToCheck = array[source].getHead();
@@ -99,6 +102,7 @@ void AdjacencyListGraph::RemoveEdge(int source, int dest)
             else
                 nodeToCheck = (nodeToCheck->GetNext());
         }
+        ///TODO fix logic
 
         if (nodeToCheck == array[source].getHead())
         {
@@ -106,9 +110,16 @@ void AdjacencyListGraph::RemoveEdge(int source, int dest)
         }
         else
         {
+            //TODO if node to chack->getnext()->get dest === dest.
+            //TODO modeTocaheck->set next(chack->getnext()->getnext)
             nodeToCheck->setNext(nodeToCheck->GetNext());
         }
 
+    }
+    else
+    {
+        cout<< "invalid input";
+        exit(1);
     }
 }
 
@@ -123,6 +134,10 @@ int AdjacencyListGraph::getEdgeWeight(int source, int dest)
         adj = adj->GetNext();
     }
     return adj->GetWeight();
+}
+
+int AdjacencyListGraph::getNumOfEdges() {
+    return numOfEdge;
 }
 
 

@@ -7,7 +7,7 @@
 static int calcGraphWight(int* parentList, AdjacencyListGraph* graph)
 {
 	int sum = 0;
-	for (int i = 1; i <= graph->getNumOfVertix(); i++)
+	for (int i = 1; i <= graph->getNumOfVertex(); i++)
 	{
 		if (parentList[i] != INF && parentList[i] != 0)
 		{
@@ -21,28 +21,28 @@ static void quickSort(int arr[], int start, int end);
 int Prim(AdjacencyListGraph* adjacencyListGraph) {
 
 
-	int numOfVertix = adjacencyListGraph->getNumOfVertix();
-	minimumHeap* Q = new minimumHeap(numOfVertix);
-	bool* inT = new bool[numOfVertix];
-	for (int i = 0; i <= numOfVertix; i++) {
+	int numOfVertex = adjacencyListGraph->getNumOfVertex();
+	minimumHeap* Q = new minimumHeap(numOfVertex);
+	bool* inT = new bool[numOfVertex];
+	for (int i = 0; i <= numOfVertex; i++) {
 		inT[i] = false;
 	}
 
-	int* minArr = new int[numOfVertix];
-	int* parent = new int[numOfVertix];
+	int* minArr = new int[numOfVertex];
+	int* parent = new int[numOfVertex];
 
-	int startVertix = 1; //Change to random vertix 1<i<n
+	int startVertex = 1; //Change to random vertex 1<i<n
 	minArr[0] = INF;
-	minArr[startVertix] = 0;
-	parent[startVertix] = NULL;
+	minArr[startVertex] = 0;
+	parent[startVertex] = NULL;
 
-	for (int j = 2; j <= numOfVertix; j++)
+	for (int j = 2; j <= numOfVertex; j++)
 	{
 		minArr[j] = INF;
 		parent[j] = NULL;
 	}
 
-	Q->Build(numOfVertix, minArr);
+	Q->Build(numOfVertex, minArr);
 	MinimumHeapNode* u;
 	while (!Q->isEmptyHeap())
 	{
@@ -75,8 +75,11 @@ int Kruskal(AdjacencyListGraph* adjacencyListGraph)
 	//vector <edge> edges;
 
 	//extractEdgeNum(gr, edges);
+    // for ()
+    //adj list = adjacencyListGraph->GetAdjList(i).
+    //ad list . add
 	//quickSort(edges, 0, edges.size() - 1);
-
+//    adjacencyListGraph->GetAdjList(0).getHead().
 	//T = UnionFind(gr.getVerSize());
 
 	//for (int i = 0; i < edges.size(); i++)
