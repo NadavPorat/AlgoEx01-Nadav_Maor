@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-int MinimumHeapNode::getVertixName()
+int MinimumHeapNode::getVertexName()
 {
 	return vertexName;
 }
@@ -18,7 +18,7 @@ void MinimumHeapNode::setValue(int newValue)
 }
 
 
-void MinimumHeapNode::setKey(int newKey)
+void MinimumHeapNode::setVertexName(int newKey)
 {
 	vertexName = newKey;
 }

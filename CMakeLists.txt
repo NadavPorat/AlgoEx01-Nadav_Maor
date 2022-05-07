@@ -17,12 +17,12 @@ add_executable(AlgoEx01_Nadav_Maor
         AlgoEx01-Nadav_Maor/DisjointSets.h
         AlgoEx01-Nadav_Maor/DisjointSetsNode.cpp
         AlgoEx01-Nadav_Maor/DisjointSetsNode.h
-        AlgoEx01-Nadav_Maor/engine.cpp
-        AlgoEx01-Nadav_Maor/engine.h
+        AlgoEx01-Nadav_Maor/Engine.cpp
+        AlgoEx01-Nadav_Maor/Engine.h
         AlgoEx01-Nadav_Maor/globalHeader.h
         AlgoEx01-Nadav_Maor/main.cpp
         AlgoEx01-Nadav_Maor/MinimumHeap.cpp
         AlgoEx01-Nadav_Maor/MinimumHeap.h
         AlgoEx01-Nadav_Maor/MinimumHeapNode.cpp
         AlgoEx01-Nadav_Maor/MinimumHeapNode.h
-        AlgoEx01-Nadav_Maor/UnionFind.cpp)
+        AlgoEx01-Nadav_Maor/UnionFind.cpp AlgoEx01-Nadav_Maor/Edge.cpp AlgoEx01-Nadav_Maor/Edge.h)

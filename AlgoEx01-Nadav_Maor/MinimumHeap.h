@@ -1,5 +1,5 @@
 #pragma once
-//#include "globalHeader.h"
+
 
 
 class MinimumHeapNode;
@@ -15,10 +15,10 @@ public:
 
 	static int Left(int Idx);
 	static int Right(int Idx);
-	static int parent(int Idx);
+    static int parent(int Idx);
 	void fixHeap(int node);
 	MinimumHeapNode* deleteMin();
-	minimumHeap(int _numOfVertix);
+	minimumHeap(int _numOfVertex);
 	minimumHeap();
 
 	void insert(MinimumHeapNode* item);
@@ -27,6 +27,6 @@ public:
 	MinimumHeapNode* getExactHeapNode(int requiredNode);
 	bool isInHEap(int requiredNode);
 	int getLogSize() const;
-	void Build(int _numOfVertix, int* weigthArr);
+	void Build(int _numOfVertex, int* weightArr);
 };
 

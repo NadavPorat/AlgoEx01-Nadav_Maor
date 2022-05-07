@@ -7,7 +7,7 @@ minimumHeap::minimumHeap(int _numOfVertex)
 	array = new MinimumHeapNode * [_numOfVertex + 1];
 }
 
-void minimumHeap::Build(int _numOfVertex, int* weigthArr)
+void minimumHeap::Build(int _numOfVertex, int* weightArr)
 {
 	positionArr = (int*)malloc((_numOfVertex + 1) * sizeof(int));
 	pysSize = _numOfVertex;
@@ -16,9 +16,8 @@ void minimumHeap::Build(int _numOfVertex, int* weigthArr)
 	for (int i = 0; i < _numOfVertex; i++)
 	{
 		array[i] = new MinimumHeapNode;
-		array[i]->setKey(i + 1);
-		array[i]->setValue(weigthArr[2]);
-
+        array[i]->setVertexName(i + 1);
+		array[i]->setValue(weightArr[i+1]);
 		positionArr[i+1] = i;
 	}
 
@@ -65,26 +64,30 @@ int minimumHeap::getLogSize() const
 //violates its rules
 void minimumHeap::fixHeap(int idxToFix)
 {
-	int smallest = idxToFix;
+	int smallest;
 	int left = Left(idxToFix);
 	int right = Right(idxToFix);
 
 
-	if ((right <= logSize) && (((((array[right])->getValue() < (array[smallest])->getValue()) && ((array[right])->getValue() != INF)) || ((array[right]->getValue() != INF) && array[smallest]->getValue() == INF))))
-		smallest = right;
+	if ((right <= logSize) && (array[right])->getValue() < (array[idxToFix])->getValue()) {
+        smallest = right;
+    }
+    else
+    {
+        smallest = idxToFix;
+    }
 
-	if ((left <= logSize) && ((((array[left])->getValue() < (array[smallest])->getValue()) && ((array[left])->getValue() != INF)) || ((array[left]->getValue() != INF) && array[smallest]->getValue() == INF)))
+	if ((left <= logSize) && (array[left])->getValue() < (array[smallest])->getValue())
 		smallest = left;
-
 
 	if (smallest != idxToFix)
 	{
 
 		MinimumHeapNode* smallestNode = array[smallest];
-		MinimumHeapNode* nodeToswap = array[idxToFix];
+		MinimumHeapNode* nodeToSwap = array[idxToFix];
 
-		positionArr[smallestNode->getVertixName()] = idxToFix;
-		positionArr[nodeToswap->getVertixName()] = smallest;
+		positionArr[smallestNode->getVertexName()] = idxToFix;
+		positionArr[nodeToSwap->getVertexName()] = smallest;
 
 		swap(array[smallest], array[idxToFix]);
 		fixHeap(smallest);
@@ -104,9 +107,10 @@ MinimumHeapNode* minimumHeap::deleteMin()
 	else
 	{
 		MinimumHeapNode* min = array[0];
-		positionArr[min->getVertixName()] = logSize;
-		array[0] = array[logSize - 1];
-		logSize--;
+        logSize--;
+        array[0] = array[logSize];
+		positionArr[array[0]->getVertexName()] = 0;
+        positionArr[min->getVertexName()]= -1;
 		fixHeap(0);
 
 		return min;
@@ -116,19 +120,16 @@ MinimumHeapNode* minimumHeap::deleteMin()
 
 void  minimumHeap::decreaseKey(int keyToDecrease, float newValue)
 {
-	if (0 != keyToDecrease) //no vetrex 0
+	if (0 != keyToDecrease) //no vertex 0
 	{
 		int idx = positionArr[keyToDecrease];
 		array[idx]->setValue(newValue);
+        while (idx != 0 && array[idx]->getValue() < array[parent(idx)]->getValue())
+        {
+            swap(array[idx], array[parent(idx)]);
+            idx = parent(idx);
+        }
 
-		while (parent(idx) >= 0)
-		{
-			fixHeap(parent(idx));
-			idx = parent(idx);
-
-			if (idx == 0)
-				idx = -1;
-		}
 	}
 }
 
@@ -156,7 +157,7 @@ bool minimumHeap::isInHEap(int requiredNode)
 {
 	for (int i = 0; i <= logSize; i++)
 	{
-		if (array[i]->getVertixName() == requiredNode)
+		if (array[i]->getVertexName() == requiredNode)
 			return true;
 	}
 	return false;

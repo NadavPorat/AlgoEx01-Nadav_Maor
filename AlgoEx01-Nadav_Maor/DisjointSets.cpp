@@ -41,10 +41,12 @@ void DisjointSets::Union(int repX, int repY)
 	{
 		arr[repY].setParent(repX);
 		arr[repX].setSize(arr[repX].getSize() + arr[repY].getSize());
+        arr[repX].setSize(arr[repY].getSize() + arr[repX].getSize());
 	}
 	else
 	{
 		arr[repX].setParent(repY);
 		arr[repY].setSize(arr[repY].getSize() + arr[repX].getSize());
+        arr[repX].setSize(arr[repY].getSize() + arr[repX].getSize());
 	}
 }

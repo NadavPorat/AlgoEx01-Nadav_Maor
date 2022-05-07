@@ -12,7 +12,8 @@
 
 using namespace std;
 
-#include "engine.h"
+#include "Engine.h"
+#include "Edge.h"
 #include "DisjointSets.h"
 #include "DisjointSetsNode.h"
 #include "MinimumHeapNode.h"

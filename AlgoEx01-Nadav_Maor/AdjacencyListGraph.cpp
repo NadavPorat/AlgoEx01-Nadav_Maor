@@ -86,40 +86,59 @@ void AdjacencyListGraph::AddEdge(int src, int dest, float newEdgeWeight)
 }
 
 
-void AdjacencyListGraph::RemoveEdge(int source, int dest)
+bool AdjacencyListGraph::RemoveEdge(int source, int dest)
 {
     ///TODO ADD REMOVE FROM BOTH SIDE
     if (IsAdjacent(source, dest))
     {
-        AdjacencyListNode* nodeToCheck = array[source].getHead();
-
-        while (nodeToCheck != nullptr)
+        AdjacencyListNode* sourceNode = array[source].getHead();
+        AdjacencyListNode* destNode = array[dest].getHead();
+        while (sourceNode != nullptr)
         {
-            if (nodeToCheck->GetDest() == dest)
+
+            if (sourceNode->GetNext()->GetDest() == dest ||sourceNode->GetDest() == dest )
             {
                 break;
             }
             else
-                nodeToCheck = (nodeToCheck->GetNext());
+                sourceNode = (sourceNode->GetNext());
         }
-        ///TODO fix logic
-
-        if (nodeToCheck == array[source].getHead())
+        if (sourceNode == array[source].getHead())
         {
-            array[source].setHead(nodeToCheck->GetNext());
+            array[source].setHead(sourceNode->GetNext());
+
         }
         else
         {
-            //TODO if node to chack->getnext()->get dest === dest.
-            //TODO modeTocaheck->set next(chack->getnext()->getnext)
-            nodeToCheck->setNext(nodeToCheck->GetNext());
+            sourceNode->setNext(sourceNode->GetNext()->GetNext());
         }
 
+        while (destNode != nullptr)
+        {
+            if (destNode->GetNext()->GetDest() == source || destNode->GetDest() == source)
+            {
+                break;
+            }
+            else
+                destNode = (destNode->GetNext());
+        }
+
+
+        if (destNode == array[dest].getHead())
+        {
+            array[dest].setHead(destNode->GetNext());
+
+        }
+        else
+        {
+            destNode->setNext(destNode->GetNext()->GetNext());
+        }
+        this->numOfEdge--;
+        return true;
     }
     else
     {
-        cout<< "invalid input";
-        exit(1);
+        return false;
     }
 }
 

@@ -10,12 +10,12 @@ private:
 
 public:
 
-	int getVertixName();
+	int getVertexName();
 	float getValue();
 	void setValue(int val);
 
 	/*****************************************************************************/
 	MinimumHeapNode* createNewMinimumHeapNode(int newSource, int newDest, int newWeight);
-	void setKey(int i);
+	void setVertexName(int i);
 };
 

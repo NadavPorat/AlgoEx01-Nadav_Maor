@@ -16,5 +16,5 @@ void DisjointSetsNode::setSize(int size)
 
 void DisjointSetsNode::setParent(int newParent)
 {
-	parent = parent;
+	parent = newParent;
 }

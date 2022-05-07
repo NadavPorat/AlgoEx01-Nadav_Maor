@@ -18,7 +18,7 @@ public:
     void MakeEmptyGraph(int _numberOfVertecsForMatrixInit);
     void AddEdge(int src, int dest, float newEdgeWeight);
     bool IsAdjacent(int source, int dest);
-    void RemoveEdge(int src, int dest);
+    bool RemoveEdge(int src, int dest);
     int getNumOfVertex();
     int getNumOfEdges();
     AdjacencyList GetAdjList(int requiredVertexAdjList);
