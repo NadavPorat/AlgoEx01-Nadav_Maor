@@ -5,7 +5,11 @@
 void Engine::run(string inFileName, string outFileName) {
     int edgeToRemove[2];
     AdjacencyListGraph* adjacencyListGraph = buildGraphFromFile(inFileName, edgeToRemove);
-
+    if(!adjacencyListGraph->IfConnectedGraph())
+    {
+        cout<< "invalid input (Graph is not connected) ";
+        exit(1);
+    }
     ////start of Prim ////
     int primWeight = Prim(adjacencyListGraph);
     ////end of Prim ////
@@ -17,9 +21,15 @@ void Engine::run(string inFileName, string outFileName) {
     string KruskalAfterRemove;
     if(  adjacencyListGraph->RemoveEdge(edgeToRemove[0], edgeToRemove[1]) )
     {
-        int KruskalTreeAfterRemoveEdge = Kruskal(adjacencyListGraph);
-        KruskalAfterRemove = "Kruskal ";
-        KruskalAfterRemove += to_string(KruskalTreeAfterRemoveEdge);
+        if(!adjacencyListGraph->IfConnectedGraph())
+        {
+            KruskalAfterRemove = "invalid input (Graph is not connected after remove edge) ";
+        }
+        else {
+            int KruskalTreeAfterRemoveEdge = Kruskal(adjacencyListGraph);
+            KruskalAfterRemove = "Kruskal ";
+            KruskalAfterRemove += to_string(KruskalTreeAfterRemoveEdge);
+        }
     }
     else
     {

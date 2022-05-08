@@ -85,7 +85,19 @@ void AdjacencyListGraph::AddEdge(int src, int dest, float newEdgeWeight)
     this->numOfEdge += 1;
 }
 
-
+bool AdjacencyListGraph::IfConnectedGraph()
+{
+    AdjacencyListNode* nodeToCheck ;
+    for(int i=1; i<= numOfVertecs; i++)
+    {
+        nodeToCheck =  array[i].getHead();
+        if(nodeToCheck== nullptr)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 bool AdjacencyListGraph::RemoveEdge(int source, int dest)
 {
     ///TODO ADD REMOVE FROM BOTH SIDE
@@ -93,10 +105,11 @@ bool AdjacencyListGraph::RemoveEdge(int source, int dest)
     {
         AdjacencyListNode* sourceNode = array[source].getHead();
         AdjacencyListNode* destNode = array[dest].getHead();
+
         while (sourceNode != nullptr)
         {
 
-            if (sourceNode->GetNext()->GetDest() == dest ||sourceNode->GetDest() == dest )
+            if (sourceNode->GetDest() == dest ||sourceNode->GetNext()->GetDest() == dest )
             {
                 break;
             }
@@ -115,7 +128,7 @@ bool AdjacencyListGraph::RemoveEdge(int source, int dest)
 
         while (destNode != nullptr)
         {
-            if (destNode->GetNext()->GetDest() == source || destNode->GetDest() == source)
+            if ( destNode->GetDest() == source || destNode->GetNext()->GetDest() == source )
             {
                 break;
             }

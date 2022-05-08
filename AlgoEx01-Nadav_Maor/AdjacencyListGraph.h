@@ -28,8 +28,7 @@ public:
     static AdjacencyListNode* newAdjListNode(int newNodedest, float newEdgeWeight);
 
 
-
-
+    bool IfConnectedGraph();
 };
 
 

@@ -28,5 +28,7 @@ public:
 	bool isInHEap(int requiredNode);
 	int getLogSize() const;
 	void Build(int _numOfVertex, int* weightArr);
+
+    void swap(MinimumHeapNode *a, MinimumHeapNode* b );
 };
 

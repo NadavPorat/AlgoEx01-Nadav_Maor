@@ -26,37 +26,37 @@ int Prim(AdjacencyListGraph* adjacencyListGraph) {
 	int* parent = new int[numOfVertex];
 
 	int startVertex = 1; //Change to random vertex 1<i<n
-	minArr[0] = INF;
-	minArr[startVertex] = 0;
-	parent[startVertex] = -1;
-
-
-	for (int j = 2; j <= numOfVertex; j++)
-	{
-		minArr[j] = INF;
-		parent[j] = -1;
-	}
+	minArr[0] = -1;
     parent[0]= -1;
+	for (int j = 1; j <= numOfVertex; j++) {
+        if (j == startVertex) {
+            minArr[startVertex] = 0;
+        } else {
+            minArr[j] = INF;
+        }
+        parent[j] = -1;
+    }
+
 	Q->Build(numOfVertex, minArr);
 	MinimumHeapNode* u;
+    AdjacencyListNode* adj;
+
 	while (!Q->isEmptyHeap())
 	{
 		u = Q->deleteMin();
-		inT[u->getVertexName()] = true;
-		AdjacencyList uAdjList = adjacencyListGraph->GetAdjList(u->getVertexName());
-		AdjacencyListNode* adj = uAdjList.getHead();
-
-		while (adj != nullptr)
-		{
-			if (!inT[adj->GetDest()] && adj->GetWeight() < minArr[adj->GetDest()])
-			{
-				int vertexDest = adj->GetDest();
-				minArr[vertexDest] = adj->GetWeight();
-				parent[vertexDest] = u->getVertexName();
-				Q->decreaseKey(adj->GetDest(), minArr[vertexDest]);
-			}
-			adj = adj->GetNext();
-		}
+        if(!inT[u->getVertexName()]) {
+            inT[u->getVertexName()] = true;
+            adj = adjacencyListGraph->GetAdjList(u->getVertexName()).getHead();
+            while (adj != nullptr) {
+                if (!inT[adj->GetDest()] && adj->GetWeight() < minArr[adj->GetDest()]) {
+                    int vertexDest = adj->GetDest();
+                    minArr[vertexDest] = adj->GetWeight();
+                    parent[vertexDest] = u->getVertexName();
+                    Q->decreaseKey(adj->GetDest(), minArr[vertexDest]);
+                }
+                adj = adj->GetNext();
+            }
+        }
 	}
 	int sum = calcGraphWightPrim(parent, adjacencyListGraph);
 	return sum;
