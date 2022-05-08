@@ -8,14 +8,14 @@ class AdjacencyList;
 class AdjacencyListGraph
 {
 
-    int numOfVertecs;
+    int numOfVertices;
     int numOfEdge;
     AdjacencyList* array;
 
 public:
-    AdjacencyListGraph(int _numberOfVerticsForMatrixInit);
+    AdjacencyListGraph(int _numberOfVerticesForMatrixInit);
     AdjacencyListGraph();
-    void MakeEmptyGraph(int _numberOfVertecsForMatrixInit);
+    void MakeEmptyGraph(int _numberOfVerticesForMatrixInit);
     void AddEdge(int src, int dest, float newEdgeWeight);
     bool IsAdjacent(int source, int dest);
     bool RemoveEdge(int src, int dest);
@@ -24,11 +24,15 @@ public:
     AdjacencyList GetAdjList(int requiredVertexAdjList);
     int getEdgeWeight(int source, int dest);
 
-
-    static AdjacencyListNode* newAdjListNode(int newNodedest, float newEdgeWeight);
-
+    static AdjacencyListNode* newAdjListNode(int newNodeDest, float newEdgeWeight);
 
     bool IfConnectedGraph();
+
+    bool DFS();
+
+    void VISIT(int i);
+
+    void VISIT(int u, int *color);
 };
 
 

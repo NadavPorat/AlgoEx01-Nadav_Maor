@@ -1,3 +1,3 @@
-Kruskal 19
-Prim 19
-Kruskal 19
+Kruskal 17
+Prim 17
+invalid input (Edge To Remove not exist) 

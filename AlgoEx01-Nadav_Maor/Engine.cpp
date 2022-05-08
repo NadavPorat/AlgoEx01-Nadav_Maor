@@ -7,7 +7,7 @@ void Engine::run(string inFileName, string outFileName) {
     AdjacencyListGraph* adjacencyListGraph = buildGraphFromFile(inFileName, edgeToRemove);
     if(!adjacencyListGraph->IfConnectedGraph())
     {
-        cout<< "invalid input (Graph is not connected) ";
+        cout<< "invalid input ";
         exit(1);
     }
     ////start of Prim ////
@@ -19,11 +19,11 @@ void Engine::run(string inFileName, string outFileName) {
 
     int kruskalWeight = Kruskal(adjacencyListGraph);
     string KruskalAfterRemove;
-    if(  adjacencyListGraph->RemoveEdge(edgeToRemove[0], edgeToRemove[1]) )
+    if(adjacencyListGraph->RemoveEdge(edgeToRemove[0], edgeToRemove[1]) )
     {
         if(!adjacencyListGraph->IfConnectedGraph())
         {
-            KruskalAfterRemove = "invalid input (Graph is not connected after remove edge) ";
+            KruskalAfterRemove = "No MST ";
         }
         else {
             int KruskalTreeAfterRemoveEdge = Kruskal(adjacencyListGraph);
@@ -33,7 +33,7 @@ void Engine::run(string inFileName, string outFileName) {
     }
     else
     {
-        KruskalAfterRemove = "invalid input (No Edge To Remove) ";
+        KruskalAfterRemove = "invalid input (Edge To Remove not exist) ";
 
     }
 
@@ -74,71 +74,99 @@ AdjacencyListGraph *Engine::buildGraphFromFile(string inFileName, int *edgeToRem
 
     if (!inputFile)
     {
-        cout << "Error while reading from file\n";
+        cout << "invalid input";
         exit(1);
     }
 
     int numOfVertex;
     int numOfEdges;
-    int edgeToRemoveSrc;
-    int edgeToRemoveDest;
+    int edgeToRemoveSrc =0;
+    int edgeToRemoveDest =0;
 
     float weightInFloat;
 
     inputFile >> numOfVertex;
     inputFile >> numOfEdges;
 
-    AdjacencyListGraph* adjacencyListGraph = new AdjacencyListGraph(numOfVertex);
-
-    bool flag = true;
-    string source;
-    string dest;
-    string weight;
-
-    getline(inputFile, inputLine);
-
-    for (int i = 0; i < numOfEdges; i++)
+    if(numOfVertex <= 0)
     {
-        (getline(inputFile, inputLine, '\n') && flag);
-        string comma_string;
-        istringstream text_stream(inputLine);
-        text_stream >> source;
-        getline(text_stream, comma_string, ' ');
-        text_stream >> dest;
-        getline(text_stream, comma_string, ' ');
-        text_stream >> weight;
+        cout<< "invalid input";
+        exit(1);
+    }
+        AdjacencyListGraph *adjacencyListGraph = new AdjacencyListGraph(numOfVertex);
 
-        if (source == "" && dest == "" && weight == "")
-        {
-            flag = false;
-        }
+        bool flag = true;
+        string source;
+        string dest;
+        string weight;
 
-        if (flag)
-        {
-            //Check if shalem number
-            if ((stoi(source) > numOfVertex || stoi(dest) > numOfVertex || source == "" || dest == "" || weight == ""))
-            {
-                cout << "Invalid input\n";
-                exit(1);
+        getline(inputFile, inputLine);
+
+        for (int i = 0; i < numOfEdges; i++) {
+            (getline(inputFile, inputLine, '\n') && flag);
+            string comma_string;
+            istringstream text_stream(inputLine);
+            text_stream >> source;
+            getline(text_stream, comma_string, ' ');
+            text_stream >> dest;
+            getline(text_stream, comma_string, ' ');
+            text_stream >> weight;
+
+            if (source == "" && dest == "" && weight == "") {
+                flag = false;
             }
-            else
-            {
-                weightInFloat = stof(weight);
-                adjacencyListGraph->AddEdge(stoi(source), stoi(dest), stof(weight));
-                if (!(floor(weightInFloat) == weightInFloat)) // Check if the new weight is a whole number or not.
+
+            if (flag) {
+
+                if(!isNumber(source) || isNumber(dest) || isNumber(weight))
                 {
                     cout << "Invalid input\n";
+                    exit(1);
                 }
-            }
+                //Check if number
+                if (stoi(source) < 1 ||(stoi(source) > numOfVertex ||stoi(dest) <1 || stoi(dest) > numOfVertex ))
+                {
+                    cout << "Invalid input\n";
+                    exit(1);
+                } else {
+                    weightInFloat = stof(weight);
+                    if(weightInFloat<0)
+                    {
+                        cout << "Invalid input\n";
+                        exit(1);
+                    }
+                    adjacencyListGraph->AddEdge(stoi(source), stoi(dest), stof(weight));
+                    if (!(floor(weightInFloat) == weightInFloat)) // Check if the new weight is a whole number or not.
+                    {
+                        cout << "Invalid input\n";
+                        exit(1);
+                    }
+                }
 
+            }
+            source = dest = weight = "";
         }
-        source = dest = weight = "";
+        inputFile >> edgeToRemoveSrc;
+        inputFile >> edgeToRemoveDest;
+
+        if((edgeToRemoveSrc<1 || edgeToRemoveSrc> numOfVertex || edgeToRemoveDest<1 ||edgeToRemoveDest> numOfVertex)&&edgeToRemoveSrc!=0 && edgeToRemoveDest!=0)
+        {
+            cout << "Invalid input\n";
+            exit(1);
+        }
+        if(edgeToRemoveSrc!=0 && edgeToRemoveDest!=0) {
+            edgeToRemove[0] = edgeToRemoveSrc;
+            edgeToRemove[1] = edgeToRemoveDest;
+        }
+        inputFile.close();
+        return adjacencyListGraph;
+
+}
+bool Engine::isNumber(const string& str)
+{
+    for (char const &c : str) {
+        if (std::isdigit(c) == 0)
+            return false;
     }
-    inputFile >> edgeToRemoveSrc;
-    inputFile >> edgeToRemoveDest;
-    int edgeToRemoveFromFile[2];
-    edgeToRemove[0] = edgeToRemoveSrc;
-    edgeToRemove[1] = edgeToRemoveDest;
-    inputFile.close();
-    return adjacencyListGraph;
+    return true;
 }

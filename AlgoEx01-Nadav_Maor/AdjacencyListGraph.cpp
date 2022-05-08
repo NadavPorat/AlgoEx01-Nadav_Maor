@@ -7,9 +7,9 @@
 using namespace std;
 
 
-AdjacencyListGraph::AdjacencyListGraph(int _numberOfVerticsForMatrixInit)
+AdjacencyListGraph::AdjacencyListGraph(int _numberOfVerticesForMatrixInit)
 {
-    MakeEmptyGraph(_numberOfVerticsForMatrixInit);
+    MakeEmptyGraph(_numberOfVerticesForMatrixInit);
 }
 
 AdjacencyListGraph::AdjacencyListGraph()
@@ -18,13 +18,13 @@ AdjacencyListGraph::AdjacencyListGraph()
 
 }
 
-void AdjacencyListGraph::MakeEmptyGraph(int _numberOfVertecsForMatrixInit)
+void AdjacencyListGraph::MakeEmptyGraph(int _numberOfVerticesForMatrixInit)
 {
-    this->numOfVertecs = _numberOfVertecsForMatrixInit;
+    this->numOfVertices = _numberOfVerticesForMatrixInit;
     this->numOfEdge = 0;
-    array = new AdjacencyList[_numberOfVertecsForMatrixInit + 1];
+    array = new AdjacencyList[_numberOfVerticesForMatrixInit + 1];
 
-    for (int forIdx = 0; forIdx <= _numberOfVertecsForMatrixInit; forIdx++)
+    for (int forIdx = 0; forIdx <= _numberOfVerticesForMatrixInit; forIdx++)
     {
         array[forIdx].setHead(nullptr);
     }
@@ -54,7 +54,7 @@ AdjacencyList AdjacencyListGraph::GetAdjList(int requiredVertexAdjList)
 
 int AdjacencyListGraph::getNumOfVertex()
 {
-    return numOfVertecs;
+    return numOfVertices;
 }
 
 
@@ -87,67 +87,108 @@ void AdjacencyListGraph::AddEdge(int src, int dest, float newEdgeWeight)
 
 bool AdjacencyListGraph::IfConnectedGraph()
 {
+    bool isConnected =true;
     AdjacencyListNode* nodeToCheck ;
-    for(int i=1; i<= numOfVertecs; i++)
+    for(int i=1; i <= numOfVertices; i++)
     {
         nodeToCheck =  array[i].getHead();
         if(nodeToCheck== nullptr)
+        {
+            isConnected= false;
+        }
+    }
+    if(numOfEdge < numOfVertices - 1)
+    {
+        isConnected = false;
+    }
+    else
+    {
+        if(!DFS())
+        {
+            isConnected = false;
+        }
+    }
+    return isConnected;
+}
+bool AdjacencyListGraph::DFS()
+{
+    //0 -white
+    //1 - grey
+    //2 - black
+    int color[numOfVertices];
+    for(int i=1; i <= numOfVertices; i++)
+    {
+        color[i]=0;
+    }
+
+    VISIT(1,color);
+
+    for(int i=1; i <= numOfVertices; i++)
+    {
+        if(color[i]!= 2)
         {
             return false;
         }
     }
     return true;
 }
+
+void AdjacencyListGraph::VISIT(int u, int * color) {
+    color[u]=1;
+    AdjacencyListNode* v = array[u].getHead();
+    while (v != nullptr)
+    {
+        if(color[v->GetDest()]==0)
+        {
+            color[v->GetDest()]=1;
+            VISIT(v->GetDest(),color);
+        }
+        v= v->GetNext();
+    }
+    color[u]=2;
+
+}
+
+
 bool AdjacencyListGraph::RemoveEdge(int source, int dest)
 {
-    ///TODO ADD REMOVE FROM BOTH SIDE
-    if (IsAdjacent(source, dest))
-    {
-        AdjacencyListNode* sourceNode = array[source].getHead();
-        AdjacencyListNode* destNode = array[dest].getHead();
+    if(source>0 && source<= numOfVertices && dest > 0 && dest<= numOfVertices) {
+        if (IsAdjacent(source, dest)) {
+            AdjacencyListNode *sourceNode = array[source].getHead();
+            AdjacencyListNode *destNode = array[dest].getHead();
 
-        while (sourceNode != nullptr)
-        {
+            while (sourceNode != nullptr) {
 
-            if (sourceNode->GetDest() == dest ||sourceNode->GetNext()->GetDest() == dest )
-            {
-                break;
+                if (sourceNode->GetDest() == dest) {
+                    array[source].setHead(sourceNode->GetNext());
+                    break;
+                }
+                if (sourceNode->GetNext()->GetDest() == dest) {
+
+                    sourceNode->setNext(sourceNode->GetNext()->GetNext());
+                    break;
+                } else
+                    sourceNode = (sourceNode->GetNext());
             }
-            else
-                sourceNode = (sourceNode->GetNext());
-        }
-        if (sourceNode == array[source].getHead())
-        {
-            array[source].setHead(sourceNode->GetNext());
 
-        }
-        else
-        {
-            sourceNode->setNext(sourceNode->GetNext()->GetNext());
-        }
+            while (destNode != nullptr) {
 
-        while (destNode != nullptr)
-        {
-            if ( destNode->GetDest() == source || destNode->GetNext()->GetDest() == source )
-            {
-                break;
+                if (destNode->GetDest() == source) {
+                    array[dest].setHead(destNode->GetNext());
+                    break;
+                }
+                if (destNode->GetNext()->GetDest() == source) {
+                    destNode->setNext(destNode->GetNext()->GetNext());
+                    break;
+                } else
+                    destNode = (destNode->GetNext());
             }
-            else
-                destNode = (destNode->GetNext());
-        }
 
-
-        if (destNode == array[dest].getHead())
-        {
-            array[dest].setHead(destNode->GetNext());
-
+            this->numOfEdge--;
+            return true;
+        } else {
+            return false;
         }
-        else
-        {
-            destNode->setNext(destNode->GetNext()->GetNext());
-        }
-        this->numOfEdge--;
-        return true;
     }
     else
     {
@@ -171,6 +212,7 @@ int AdjacencyListGraph::getEdgeWeight(int source, int dest)
 int AdjacencyListGraph::getNumOfEdges() {
     return numOfEdge;
 }
+
 
 
 
